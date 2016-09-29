@@ -15,6 +15,8 @@ class HierarchicalCluster
     @detections
   end
 
+  private
+
   def merge_clusters(one, other)
     @detections << [one.merge(other)]
     @detections.delete(one)
