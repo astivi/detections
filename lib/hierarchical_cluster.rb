@@ -18,9 +18,9 @@ class HierarchicalCluster
   private
 
   def merge_clusters(one, other)
-    @detections << [one.merge(other)]
     @detections.delete(one)
     @detections.delete(other)
+    @detections << one.merge(other)
   end
 
   def find_max_likeness
