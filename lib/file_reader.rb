@@ -1,3 +1,5 @@
+require_relative 'track_detection'
+
 class FileReader
 
   def initialize(file)
