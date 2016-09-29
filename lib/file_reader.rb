@@ -8,8 +8,15 @@ class FileReader
     results = []
     @file.each_with_index do |line, index|
       next if index == 0
-      results = [TrackDetection.new(2927, 150285), TrackDetection.new(2880, 173295)]
+      results << read_detection(line)
     end
     results
+  end
+
+  private
+
+  def read_detection(line)
+    created_at, audio_source_id, track_id = line.split(',')
+    TrackDetection.new(audio_source_id.to_i, track_id.to_i)
   end
 end
