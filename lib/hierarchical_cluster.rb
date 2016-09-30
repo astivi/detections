@@ -1,16 +1,23 @@
+#References
 #http://www.cs.utah.edu/~piyush/teaching/4-10-print.pdf
+#http://home.deib.polimi.it/matteucc/Clustering/tutorial_html/hierarchical.html
+require 'matrix'
 class HierarchicalCluster
   def initialize(detections, threshold)
     @detections = detections.map do |detection|
       Set.new [detection]
     end
     @threshold = threshold
+    @likeness_matrix = Array.new(@detections.size) { Array.new(@detections.size) { -1 } }
+    build_likeness_matrix
+    print_likeness_matrix
   end
 
   def clusterize
     i, j = find_max_likeness
     until i.nil? && j.nil?
-      merge_clusters(@detections[i], @detections[j])
+      merge_clusters(i, j)
+      print_likeness_matrix
       i, j = find_max_likeness
     end
     @detections
@@ -18,26 +25,50 @@ class HierarchicalCluster
 
   private
 
+  def print_likeness_matrix
+    puts '__________________'
+    (0..@likeness_matrix.size-1).each do |i|
+      print '['
+      (0..@likeness_matrix[i].size-1).each do |j|
+        print "#{@likeness_matrix[i][j].round(1)},"
+      end
+      puts ']'
+    end
+  end
+
+  def build_likeness_matrix
+    (0..@likeness_matrix.size-1).each do |i|
+      (0..@likeness_matrix.size-1).each do |j|
+        @likeness_matrix[i][j] = calculate_likeness(@detections[i], @detections[j])
+      end
+    end
+  end
+
   def merge_clusters(one, other)
-    @detections.delete(one)
-    @detections.delete(other)
-    @detections << one.merge(other)
+    merged = @detections[one].merge(@detections[other])
+    @detections.delete(@detections[one])
+    @detections.delete(@detections[other])
+    @detections << merged
+    (0..@likeness_matrix.size-1).each do |i|
+      @likeness_matrix[i].delete_at([one, other].max)
+      @likeness_matrix[i].delete_at([one, other].min)
+    end
+    @likeness_matrix.delete_at([one, other].max)
+    @likeness_matrix.delete_at([one, other].min)
+    (0..@likeness_matrix.size-1).each do |i|
+      new_likeness = calculate_likeness(merged, @detections[i])
+      @likeness_matrix[i] << new_likeness
+    end
+    @likeness_matrix << Array.new(@detections.size) {|index| calculate_likeness(merged, @detections[index])}
   end
 
   def find_max_likeness
-    max_i = max_j = nil
-    max_likeness = @threshold
-    (0..@detections.size-1).each do |i|
-      (i+1..@detections.size-1).each do |j|
-        likeness = calculate_likeness(@detections[i], @detections[j])
-        return [i, j] if likeness == 1
-        if likeness > max_likeness
-          max_i = i
-          max_j = j
-        end
+    (0..@likeness_matrix.size-1).each do |i|
+      (0..@likeness_matrix[i].size-1).each do |j|
+        return [i, j] if i != j and @likeness_matrix[i][j] > @threshold
       end
     end
-    [max_i, max_j]
+    [nil, nil]
   end
 
   def calculate_likeness(cluster1, cluster2)
@@ -46,7 +77,7 @@ class HierarchicalCluster
       cluster2.each_with_index do |c2, j|
         if c1.audio_source_id == c2.audio_source_id or c1.track_id == c2.track_id
           alike[i] = 1
-          alike[alike.size - j] = 1
+          alike[(alike.size - 1) - j] = 1
         end
       end
     end

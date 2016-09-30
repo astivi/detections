@@ -57,4 +57,31 @@ RSpec.describe HierarchicalCluster, '#clusterize' do
       expect(cluster.clusterize.size).to eq(1)
     end
   end
+
+  context 'matrix' do
+    it 'stuff' do
+      matrix = Array.new(2) {Array.new(2) {1}}
+      print_likeness_matrix matrix
+      matrix[1].delete_at(1)
+      matrix[1].delete_at(0)
+      matrix[0].delete_at(1)
+      matrix[0].delete_at(0)
+      matrix.delete_at(1)
+      matrix.delete_at(0)
+      matrix << [1.0]
+      print_likeness_matrix matrix
+      puts matrix
+    end
+  end
+end
+
+def print_likeness_matrix(matrix)
+  puts '__________________'
+  (0..matrix.size-1).each do |i|
+    print '['
+    (0..matrix[i].size-1).each do |j|
+      print "#{matrix[i][j]},"
+    end
+    puts ']'
+  end
 end
