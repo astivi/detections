@@ -13,10 +13,10 @@ class HierarchicalCluster
   end
 
   def clusterize
-    i, j = find_max_likeness
+    i, j = find_merge_candidate
     until i.nil? && j.nil?
       merge_clusters(i, j)
-      i, j = find_max_likeness
+      i, j = find_merge_candidate
     end
     @detections
   end
@@ -51,10 +51,10 @@ class HierarchicalCluster
     @likeness_matrix << Array.new(@detections.size) {|index| calculate_likeness(merged, @detections[index])}
   end
 
-  def find_max_likeness
+  def find_merge_candidate
     (0..@likeness_matrix.size-1).each do |i|
       (0..@likeness_matrix[i].size-1).each do |j|
-        return [i, j] if i != j and @likeness_matrix[i][j] > @threshold
+        return [i, j] if i != j and @likeness_matrix[i][j] >= @threshold
       end
     end
     [nil, nil]
