@@ -10,31 +10,18 @@ class HierarchicalCluster
     @threshold = threshold
     @likeness_matrix = Array.new(@detections.size) { Array.new(@detections.size) { -1 } }
     build_likeness_matrix
-    print_likeness_matrix
   end
 
   def clusterize
     i, j = find_max_likeness
     until i.nil? && j.nil?
       merge_clusters(i, j)
-      print_likeness_matrix
       i, j = find_max_likeness
     end
     @detections
   end
 
   private
-
-  def print_likeness_matrix
-    puts '__________________'
-    (0..@likeness_matrix.size-1).each do |i|
-      print '['
-      (0..@likeness_matrix[i].size-1).each do |j|
-        print "#{@likeness_matrix[i][j].round(1)},"
-      end
-      puts ']'
-    end
-  end
 
   def build_likeness_matrix
     (0..@likeness_matrix.size-1).each do |i|
@@ -45,9 +32,11 @@ class HierarchicalCluster
   end
 
   def merge_clusters(one, other)
-    merged = @detections[one].merge(@detections[other])
-    @detections.delete(@detections[one])
-    @detections.delete(@detections[other])
+    detection_one = @detections[one]
+    detection_other = @detections[other]
+    merged = detection_one.merge(detection_other)
+    @detections.delete(detection_one)
+    @detections.delete(detection_other)
     @detections << merged
     (0..@likeness_matrix.size-1).each do |i|
       @likeness_matrix[i].delete_at([one, other].max)
