@@ -5,6 +5,10 @@ class ByTrackFileWriter < FileWriter
 
   private
 
+  def header
+    'track_id | genre'
+  end
+
   def comparator_attr(element)
     element.track_id
   end

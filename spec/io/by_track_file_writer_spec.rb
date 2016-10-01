@@ -6,13 +6,13 @@ RSpec.describe ByTrackFileWriter, '#write_genres' do
     it 'writes each genre id and source_id into a file' do
       file = double('file')
       classifications = [TrackClassification.new(1,1,1), TrackClassification.new(3,1,1), TrackClassification.new(2,2,2)]
-      file_writer = ByTrackFileWriter.new(classifications, file)
+      file_writer = ByTrackFileWriter.new(file)
 
-      expect(file).to receive(:puts).with('source_id | genre')
+      expect(file).to receive(:puts).with('track_id | genre')
       expect(file).to receive(:puts).with('1 | genre1')
       expect(file).to receive(:puts).with('2 | genre2')
 
-      file_writer.write_genres
+      file_writer.write_genres(classifications)
     end
   end
 end

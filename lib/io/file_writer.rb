@@ -2,16 +2,19 @@ require 'model/track_classification'
 
 class FileWriter
 
-  def initialize(classifications, file)
-    @classifications = sort(classifications)
+  def initialize(file)
     @file = file
   end
 
-  def write_genres
-    @file.puts 'source_id | genre'
-    @classifications.each do |classification|
+  def write_genres(classifications)
+    @file.puts(header)
+    sort(classifications).each do |classification|
       @file.puts(format_classification(classification))
     end
+  end
+
+  def header
+    raise 'Method not implemented, override in subclass'
   end
 
   def format_classification

@@ -5,6 +5,10 @@ class BySourceFileWriter < FileWriter
 
   private
 
+  def header
+    'source_id | genre'
+  end
+
   def comparator_attr(element)
     element.audio_source_id
   end
