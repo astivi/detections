@@ -1,5 +1,5 @@
-require 'by_source_file_writer'
-require 'track_classification'
+require 'io/by_source_file_writer'
+require 'model/track_classification'
 
 RSpec.describe BySourceFileWriter, '#write_genres' do
   context 'given a genre collection' do

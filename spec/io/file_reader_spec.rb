@@ -1,5 +1,5 @@
-require 'file_reader'
-require 'track_detection'
+require 'io/file_reader'
+require 'model/track_detection'
 
 RSpec.describe FileReader, '#read_detections' do
   context 'given a valid file' do

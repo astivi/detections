@@ -1,5 +1,5 @@
-require 'hierarchical_cluster'
-require 'track_detection'
+require 'analysis/hierarchical_cluster'
+require 'model/track_detection'
 
 RSpec.describe HierarchicalCluster, '#clusterize' do
   context 'given two different audio sources' do

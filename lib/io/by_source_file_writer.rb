@@ -1,4 +1,4 @@
-require_relative 'track_classification'
+require 'model/track_classification'
 
 class BySourceFileWriter
 

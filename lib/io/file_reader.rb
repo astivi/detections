@@ -1,4 +1,4 @@
-require_relative 'track_detection'
+require 'model/track_detection'
 
 class FileReader
 
