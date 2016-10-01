@@ -7,6 +7,6 @@ class TrackDetection
 
   def ==(other)
     return false unless other.instance_of? TrackDetection
-    @audio_source_id == other.audio_source_id && @track_id = other.track_id
+    @audio_source_id == other.audio_source_id && @track_id == other.track_id
   end
 end
