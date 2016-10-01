@@ -10,7 +10,6 @@ RSpec.describe ByTrackFileWriter, '#write_genres' do
 
       expect(file).to receive(:puts).with('source_id | genre')
       expect(file).to receive(:puts).with('1 | genre1')
-      expect(file).to receive(:puts).with('1 | genre1')
       expect(file).to receive(:puts).with('2 | genre2')
 
       file_writer.write_genres

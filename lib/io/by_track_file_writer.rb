@@ -5,6 +5,10 @@ class ByTrackFileWriter < FileWriter
 
   private
 
+  def comparator_attr(element)
+    element.track_id
+  end
+
   def format_classification(track_classification)
     "#{track_classification.track_id} | genre#{track_classification.genre_id}"
   end
