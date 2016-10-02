@@ -8,7 +8,6 @@ RSpec.describe ClusterClassificator, '#classify' do
       clusters = [Set.new([TrackDetection.new(1, 1), TrackDetection.new(1, 2)]), Set.new([TrackDetection.new(3,3)])]
       classificator = ClusterClassificator.new(clusters)
       classifications = classificator.classify
-      puts classifications.inspect
       expect(classifications.size).to eq(3)
       expect(classifications[1]).to be_a(TrackClassification)
       expect(classifications[1].audio_source_id).to eq(1)
