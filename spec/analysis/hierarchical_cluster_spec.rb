@@ -2,6 +2,11 @@ require 'analysis/hierarchical_cluster'
 require 'model/track_detection'
 
 RSpec.describe HierarchicalCluster, '#clusterize' do
+  before do
+    allow_any_instance_of(HierarchicalCluster).to receive(:print)
+    allow_any_instance_of(HierarchicalCluster).to receive(:puts)
+  end
+
   context 'given two different audio sources' do
     it 'segregates into different genres' do
       detections = [TrackDetection.new(1, 1), TrackDetection.new(2, 2)]
