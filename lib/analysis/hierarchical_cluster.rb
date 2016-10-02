@@ -16,9 +16,11 @@ class HierarchicalCluster
   def clusterize
     i, j = find_merge_candidate
     until i.nil? && j.nil?
+      print "Clustering... (#{@detections.size} clusters so far)\r"
       merge_clusters(i, j)
       i, j = find_merge_candidate
     end
+    puts "Clustering finished with #{@detections.size} clusters!"
     @detections
   end
 

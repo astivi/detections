@@ -6,6 +6,10 @@ class FileWriter
     @file = file
   end
 
+  def set_file(file)
+    @file = file
+  end
+
   def write_genres(classifications)
     @file.puts(header)
     sort(classifications).each do |classification|
