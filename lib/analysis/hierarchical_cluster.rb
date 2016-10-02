@@ -2,6 +2,7 @@
 #http://www.cs.utah.edu/~piyush/teaching/4-10-print.pdf
 #http://home.deib.polimi.it/matteucc/Clustering/tutorial_html/hierarchical.html
 require 'matrix'
+require 'set'
 class HierarchicalCluster
   def initialize(detections, threshold)
     @detections = detections.map do |detection|

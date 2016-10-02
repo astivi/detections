@@ -1,4 +1,4 @@
-require 'model/track_classification'
+require_relative '../model/track_classification'
 require_relative 'file_writer'
 
 class ByTrackFileWriter < FileWriter

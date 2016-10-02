@@ -1,5 +1,6 @@
-require 'model/track_detection'
-require 'model/track_classification'
+require_relative '../model/track_detection'
+require_relative '../model/track_classification'
+
 class ClusterClassificator
 
   def initialize(clusters)
