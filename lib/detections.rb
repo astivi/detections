@@ -23,6 +23,7 @@ class Detections
   def detect(input_file, clustering_threshold)
     file_reader = FileReader.new(input_file)
     detections = file_reader.read_detections
+    puts "File read"
     clusterizer = HierarchicalCluster.new(detections, clustering_threshold)
     classificator = ClusterClassificator.new(clusterizer.clusterize)
     classifications = classificator.classify

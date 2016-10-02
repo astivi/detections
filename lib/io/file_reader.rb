@@ -8,7 +8,7 @@ class FileReader
 
   def read_detections
     results = []
-    @file.each_with_index do |line, index|
+    File.readlines(@file).each_with_index do |line, index|
       next if index == 0
       results << read_detection(line)
     end
