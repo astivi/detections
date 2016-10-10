@@ -13,6 +13,27 @@ class HierarchicalCluster
     build_likeness_matrix
   end
 
+  def << (detection)
+    likeness_array = Array.new(@detections.size+1)
+    (0..@detections.size-1).each do |i|
+      likeness_array[i] = calculate_likeness(@detections[i], detection)
+      if likeness_array[i] > @threshold
+        other = remove_cluster(i)
+        merged = detection.merge(other)
+        self << merged
+        return
+      end
+    end
+    @likeness_matrix << likeness_array
+    @detections << detection
+  end
+
+  def merge_clusterizer(other)
+    other.detections.each do |detection|
+      self << detection
+    end
+  end
+
   def clusterize
     i, j = find_merge_candidate
     until i.nil? && j.nil?
@@ -24,6 +45,10 @@ class HierarchicalCluster
     @detections
   end
 
+  def detections
+    @detections
+  end
+
   private
 
   def build_likeness_matrix
@@ -32,6 +57,16 @@ class HierarchicalCluster
         @likeness_matrix[i][j] = calculate_likeness(@detections[i], @detections[j])
       end
     end
+  end
+
+  def remove_cluster(index)
+    cluster = @detections[index]
+    @detections.delete(cluster)
+    (0..@likeness_matrix.size-1).each do |i|
+      @likeness_matrix[i].delete_at(index)
+    end
+    @likeness_matrix.delete_at(index)
+    cluster
   end
 
   def merge_clusters(one, other)

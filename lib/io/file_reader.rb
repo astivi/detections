@@ -8,9 +8,12 @@ class FileReader
 
   def read_detections
     results = []
-    File.readlines(@file).each_with_index do |line, index|
+    @file.each_with_index do |line, index|
+      print "Reading file... (#{index} lines read so far)\r" if index%100 == 0
       next if index == 0
-      results << read_detection(line)
+      detection = read_detection(line)
+      results << detection
+      yield Set.new([detection]), index if block_given?
     end
     results
   end
