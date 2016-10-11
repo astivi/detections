@@ -4,14 +4,19 @@ Detections
 About
 -----
 
-Dado um arquivo de entrada com músicas e rádios onde estas músicas foram tocadas, tenta induzir o gënero de cada música com um algoritmo de clusterização dos dados.
+Given a file with tracks and radios in which these track were played, figures out the genre of each song by clustering data.
 
 Usage
 -----
 
-> ruby {arquivoDeEntrada} {limiarDeSemelhança}
+> ruby {inputFile} {similarityThreshold}
 
-Onde limiar de semelhança é um valor entre 0.0 e 1.0 que representa o grau de semelhança mínimo entre dois gëneros distintos para que eles sejam agrupados em um só.
+Similarity threshold stands for a value between 0.0 and 1.0 which represents the minimum likeness between two distinct genres so that they can be merged into one.
+
+Output
+------
+
+Output goes into {projectDir}/output/{inputFile}.by_source and {projectDir}/output/{inputFile}.by_track
 
 Tests
 -----
@@ -21,6 +26,6 @@ Tests
 References
 ----------
 
-O código foi baseado nestes dois textos:
+Code was based on these two references:
 > http://www.cs.utah.edu/~piyush/teaching/4-10-print.pdf
 > http://home.deib.polimi.it/matteucc/Clustering/tutorial_html/hierarchical.html
