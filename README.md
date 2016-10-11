@@ -4,7 +4,7 @@ Detections
 About
 -----
 
-Lë o arquivo de entrada e sumariza os gëneros musicais.
+Dado um arquivo de entrada com músicas e rádios onde estas músicas foram tocadas, tenta induzir o gënero de cada música com um algoritmo de clusterização dos dados.
 
 Usage
 -----
@@ -17,3 +17,10 @@ Tests
 -----
 
 > bundle exec rspec
+
+References
+----------
+
+O código foi baseado nestes dois textos:
+> http://www.cs.utah.edu/~piyush/teaching/4-10-print.pdf
+> http://home.deib.polimi.it/matteucc/Clustering/tutorial_html/hierarchical.html
